@@ -1,20 +1,8 @@
 import React from 'react';
-import ContactList from './src/components/contactList';
-import { Container } from 'native-base';
+import Setup from './src/boot/setup';
 
 export default class App extends React.Component {
-  async componentWillMount() {
-    await Expo.Font.loadAsync({
-      Roboto: require('native-base/Fonts/Roboto.ttf'),
-      Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf'),
-    });
-  }
-
   render() {
-    return (
-      <Container>
-        <ContactList />
-      </Container>
-    );
+    return <Setup />;
   }
 }

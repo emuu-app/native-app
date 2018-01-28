@@ -20,9 +20,12 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^6.2.1",
-    "expo": "^24.0.0",
-    "native-base": "^2.3.5",
-    "react": "16.0.0",
-    "react-native": "0.51.0"
+    "expo": "25.0.0",
+    "immutability-helper": "^2.6.4",
+    "native-base": "^2.3.7",
+    "performance-now": "^2.1.0",
+    "prop-types": "^15.6.0",
+    "react": "16.2.0",
+    "react-native": "0.52.0"
   }
 }

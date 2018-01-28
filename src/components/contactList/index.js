@@ -69,5 +69,6 @@ class ListThumbnailExample extends Component {
     );
   }
 }
+rp
 
 export default ListThumbnailExample;
