@@ -66,7 +66,6 @@ class SelectContacts extends Component {
   };
 
   onItemPress = (contactId, isSelected) => {
-    console.log(`${contactId}: ${isSelected}`);
     if (contactId) {
       if (isSelected) {
         this.state.selectedContacts[contactId] = true;
@@ -81,7 +80,7 @@ class SelectContacts extends Component {
   };
 
   _renderFab() {
-    if (this.state.selectedContacts.length) {
+    if (Object.getOwnPropertyNames(this.state.selectedContacts).length > 0) {
       return (
         <Fab
           active={false}
