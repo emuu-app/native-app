@@ -17,6 +17,7 @@ import {
 import now from 'performance-now';
 import ContactItem from './contactItem';
 import update from 'immutability-helper';
+import { ContactsContext } from '../ContactsContext';
 
 class SelectContacts extends Component {
   constructor(props) {
@@ -24,7 +25,7 @@ class SelectContacts extends Component {
 
     this.state = {
       contacts: [],
-      selectedContacts: [],
+      selectedContacts: {},
     };
   }
 
@@ -32,14 +33,15 @@ class SelectContacts extends Component {
     this.getContacts();
   };
 
-  getContacts() {
+  getContacts = () => {
     var start = now();
+    console.log('query contacts');
     return Expo.Contacts.getContactsAsync({
-      pageSize: 50,
+      pageSize: 10,
       fields: [
         Expo.Contacts.PHONE_NUMBERS,
         Expo.Contacts.EMAILS,
-        Expo.Contacts.THUMBNAIL,
+        //Expo.Contacts.THUMBNAIL,
       ],
     })
       .then(contacts => {
@@ -61,28 +63,19 @@ class SelectContacts extends Component {
         var end = now();
         console.log((start - end).toFixed(3));
       });
-  }
+  };
 
   onItemPress = (contactId, isSelected) => {
     console.log(`${contactId}: ${isSelected}`);
     if (contactId) {
-      this.setState(prevState => {
-        if (prevState.selectedContacts) {
-          var idx = prevState.selectedContacts.indexOf(contactId);
-          if (!isSelected && idx >= 0) {
-            return {
-              selectedContacts: update(prevState.selectedContacts, {
-                $splice: [[idx, 1]],
-              }),
-            };
-          } else if (isSelected && idx < 0) {
-            return {
-              selectedContacts: update(prevState.selectedContacts, {
-                $push: [contactId],
-              }),
-            };
-          }
-        }
+      if (isSelected) {
+        this.state.selectedContacts[contactId] = true;
+      } else {
+        delete this.state.selectedContacts[contactId];
+      }
+
+      this.setState({
+        selectedContacts: this.state.selectedContacts,
       });
     }
   };
@@ -125,6 +118,9 @@ class SelectContacts extends Component {
           </Body>
         </Header>
         <Content>
+          <Button onClick={this.getContacts}>
+            <Text>Refresh</Text>
+          </Button>
           <Text>{JSON.stringify(this.state.selectedContacts)}</Text>
           <Text>Who would you like to keep in touch with?</Text>
           <List>{rows}</List>

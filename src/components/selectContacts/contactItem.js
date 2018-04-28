@@ -37,7 +37,14 @@ class ContactItem extends Component {
     return (
       <ListItem avatar onPress={() => this.onItemPress(this.state.isSelected)}>
         <Left>
-          <Thumbnail source={{ uri: this.state.contact.thumbnail.uri }} />
+          <Thumbnail
+            source={{
+              uri:
+                this.state.contact &&
+                this.state.contact.thumbnail &&
+                this.state.contact.thumbnail.uri,
+            }}
+          />
         </Left>
         <Body>
           <Text
